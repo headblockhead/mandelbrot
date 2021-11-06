@@ -21,7 +21,7 @@ func main() {
 const width = 1400
 const height = 600
 
-var maxIterations = 945
+var maxIterations = 200
 
 func run() {
 	cfg := pixelgl.WindowConfig{
@@ -33,8 +33,8 @@ func run() {
 		panic(err)
 	}
 
-	minX, maxX := -5.060331081299, 2.258335585368
-	minY, maxY := -1.319707274124, 1.320292725876
+	minX, maxX := -4.413230702312, 2.905435964354
+	minY, maxY := -1.365239583949, 1.274760416051
 	zoomMinX, zoomMaxX := 1.24417333333/8, -1.24417333333/8
 	zoomMinY, zoomMaxY := 0.4488/8, -0.4488/8
 	i := 0.0
@@ -43,16 +43,21 @@ func run() {
 		pic := pixel.PictureDataFromImage(createImage(minX, maxX, minY, maxY))
 		sprite := pixel.NewSprite(pic, pic.Bounds())
 		sprite.Draw(win, pixel.IM.Moved(win.Bounds().Center()))
-		maxIterations += int(i * i)
-		//		zoomMinX -= i / 8000
-		//		zoomMaxX -= i / 8000
-		//		zoomMinY -= i / 4000
-		//		zoomMaxY -= i / 4000
+		maxIterations += int(i * 2)
+		zoomMinX = zoomMinX * 0.97
+		zoomMaxX = zoomMaxX * 0.97
+		zoomMinY = zoomMinY * 0.97
+		zoomMaxY = zoomMaxY * 0.97
 		minX += zoomMinX
 		maxX += zoomMaxX
 		minY += zoomMinY
 		maxY += zoomMaxY
 		fmt.Println("---------------------[START (", i, ")]----------------")
+		fmt.Println("zoomMinX:", zoomMinX)
+		fmt.Println("zoomMaxX:", zoomMaxX)
+		fmt.Println("zoomMinY:", zoomMinY)
+		fmt.Println("zoomMaxY:", zoomMaxY)
+
 		fmt.Println("minX:", minX)
 		fmt.Println("maxX:", maxX)
 		fmt.Println("minY:", minY)
