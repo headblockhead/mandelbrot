@@ -37,27 +37,27 @@ func run() {
 	minY, maxY := -1.319707274124, 1.320292725876
 	zoomMinX, zoomMaxX := 1.24417333333/8, -1.24417333333/8
 	zoomMinY, zoomMaxY := 0.4488/8, -0.4488/8
-
+	i := 0.0
 	for !win.Closed() {
+		i++
 		pic := pixel.PictureDataFromImage(createImage(minX, maxX, minY, maxY))
 		sprite := pixel.NewSprite(pic, pic.Bounds())
 		sprite.Draw(win, pixel.IM.Moved(win.Bounds().Center()))
-		//		time.Sleep(time.Second * 10)
-		maxIterations += 10.0
-		//		zoomMinX += 0.01
-		//		zoomMaxX -= 0.01
-		//		zoomMinY += 0.01
-		//zoomMaxY -= 0.01
+		maxIterations += int(i * i)
+		//		zoomMinX -= i / 8000
+		//		zoomMaxX -= i / 8000
+		//		zoomMinY -= i / 4000
+		//		zoomMaxY -= i / 4000
 		minX += zoomMinX
 		maxX += zoomMaxX
 		minY += zoomMinY
 		maxY += zoomMaxY
-		fmt.Println("---------------------[START]------------------")
+		fmt.Println("---------------------[START (", i, ")]----------------")
 		fmt.Println("minX:", minX)
 		fmt.Println("maxX:", maxX)
 		fmt.Println("minY:", minY)
 		fmt.Println("maxY:", maxY)
-		fmt.Println("---------------------[END]------------------")
+		fmt.Println("---------------------[END (", i, ")]-----------------")
 		win.Update()
 	}
 }

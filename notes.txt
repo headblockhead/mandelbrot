@@ -1,0 +1,1 @@
+Need to add zoom slowdown, after 24 steps, minY and maxY invert.
