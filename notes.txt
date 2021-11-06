@@ -1,1 +1,0 @@
-after 40 steps, minY and maxY invert.
