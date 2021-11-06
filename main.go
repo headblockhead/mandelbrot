@@ -21,7 +21,7 @@ func main() {
 const width = 1400
 const height = 600
 
-var maxIterations = 200
+var maxIterations = 97
 
 func run() {
 	cfg := pixelgl.WindowConfig{
@@ -38,16 +38,18 @@ func run() {
 	zoomMinX, zoomMaxX := 1.24417333333/8, -1.24417333333/8
 	zoomMinY, zoomMaxY := 0.4488/8, -0.4488/8
 	i := 0.0
+	dec := 0.96
 	for !win.Closed() {
 		i++
 		pic := pixel.PictureDataFromImage(createImage(minX, maxX, minY, maxY))
 		sprite := pixel.NewSprite(pic, pic.Bounds())
 		sprite.Draw(win, pixel.IM.Moved(win.Bounds().Center()))
-		maxIterations += int(i * 2)
-		zoomMinX = zoomMinX * 0.97
-		zoomMaxX = zoomMaxX * 0.97
-		zoomMinY = zoomMinY * 0.97
-		zoomMaxY = zoomMaxY * 0.97
+		maxIterations += 6
+		dec -= 0.00004
+		zoomMinX = zoomMinX * dec
+		zoomMaxX = zoomMaxX * dec
+		zoomMinY = zoomMinY * dec
+		zoomMaxY = zoomMaxY * dec
 		minX += zoomMinX
 		maxX += zoomMaxX
 		minY += zoomMinY
