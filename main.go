@@ -32,23 +32,25 @@ func run() {
 	if err != nil {
 		panic(err)
 	}
-
 	minX, maxX := -4.413230702312, 2.905435964354
 	minY, maxY := -1.365239583949, 1.274760416051
 	zoomMinX, zoomMaxX := 1.24417333333/8, -1.24417333333/8
 	zoomMinY, zoomMaxY := 0.4488/8, -0.4488/8
 	i := 0.0
 	dec := 0.96
+	igdec := false
 	for !win.Closed() {
 		i++
 		pic := pixel.PictureDataFromImage(createImage(minX, maxX, minY, maxY))
 		sprite := pixel.NewSprite(pic, pic.Bounds())
 		sprite.Draw(win, pixel.IM.Moved(win.Bounds().Center()))
-		//		maxIterations += 6
-		if dec > 0.955 {
+		maxIterations += 6
+		if dec > 0.954 && !igdec {
 			dec -= 0.000035
+
 		} else {
-			dec = 1
+			dec = 1.0025
+			igdec = true
 		}
 		zoomMinX = zoomMinX * dec
 		zoomMaxX = zoomMaxX * dec
