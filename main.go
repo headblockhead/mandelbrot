@@ -9,7 +9,6 @@ import (
 	"os"
 	"sync"
 
-	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"golang.org/x/image/colornames"
 )
@@ -18,39 +17,56 @@ func main() {
 	pixelgl.Run(run)
 }
 
-const width = 1400
-const height = 600
+const width = 2800
+const height = 1200
 
-var maxIterations = 180
+var maxIterations = 300
 
 func run() {
-	cfg := pixelgl.WindowConfig{
-		Title:  "Pixel Rocks!",
-		Bounds: pixel.R(0, 0, width, height),
-	}
-	win, err := pixelgl.NewWindow(cfg)
-	if err != nil {
-		panic(err)
-	}
+	//	cfg := pixelgl.WindowConfig{
+	//		Title:  "Fractals!",
+	//		Bounds: pixel.R(0, 0, width, height),
+	//	}
+	//	win, err := pixelgl.NewWindow(cfg)
+	//	if err != nil {
+	//		panic(err)
+	//	}
 	minX, maxX := -4.413230702312, 2.905435964354
 	minY, maxY := -1.365239583949, 1.274760416051
 	zoomMinX, zoomMaxX := 1.24417333333/8, -1.24417333333/8
 	zoomMinY, zoomMaxY := 0.4488/8, -0.4488/8
 	i := 0.0
 	dec := 0.96
-	igdec := false
-	for !win.Closed() {
+	//	for !win.Closed() {
+	for true {
 		i++
-		pic := pixel.PictureDataFromImage(createImage(minX, maxX, minY, maxY))
-		sprite := pixel.NewSprite(pic, pic.Bounds())
-		sprite.Draw(win, pixel.IM.Moved(win.Bounds().Center()))
-		maxIterations += 6
-		if dec > 0.954 && !igdec {
-			dec -= 0.000035
-
+		var out *os.File
+		var err error
+		image := createImage(minX, maxX, minY, maxY)
+		if i < 100 && i > 9 {
+			out, err = os.Create("./image" + "0" + fmt.Sprint(i) + ".png")
+		} else if i < 10 {
+			out, err = os.Create("./image" + "0" + "0" + fmt.Sprint(i) + ".png")
 		} else {
-			dec = 1.0025
-			igdec = true
+			out, err = os.Create("./image" + fmt.Sprint(i) + ".png")
+		}
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		err = png.Encode(out, image)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		//pic := pixel.PictureDataFromImage(image)
+		//		sprite := pixel.NewSprite(pic, pic.Bounds())
+		//		sprite.Draw(win, pixel.IM.Moved(win.Bounds().Center()))
+		maxIterations += 6
+		if dec > 0.954 {
+			dec -= 0.000035
+		} else {
+			dec = 1.001
 		}
 		zoomMinX = zoomMinX * dec
 		zoomMaxX = zoomMaxX * dec
@@ -66,12 +82,16 @@ func run() {
 		fmt.Println("zoomMinY:", zoomMinY)
 		fmt.Println("zoomMaxY:", zoomMaxY)
 		fmt.Println("dec:", dec)
+		fmt.Println("maxIterations:", maxIterations)
 		fmt.Println("minX:", minX)
 		fmt.Println("maxX:", maxX)
 		fmt.Println("minY:", minY)
 		fmt.Println("maxY:", maxY)
 		fmt.Println("---------------------[END (", i, ")]-----------------")
-		win.Update()
+		if i == 600 {
+			fmt.Println("ffmpeg -r 15 -f image2 -s 3840x2160 -i image%03d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p test.mp4")
+		}
+		//		win.Update()
 	}
 }
 
