@@ -1,17 +1,3 @@
-module githuub.com/a-h/mandel
-
-go 1.17
-
-require (
-	github.com/faiface/pixel v0.10.0
-	golang.org/x/image v0.0.0-20211028202545-6944b10bf410
-)
-
-require (
-	github.com/faiface/glhf v0.0.0-20181018222622-82a6317ac380 // indirect
-	github.com/faiface/mainthread v0.0.0-20171120011319-8b78f0a41ae3 // indirect
-	github.com/go-gl/gl v0.0.0-20190320180904-bf2b1f2f34d7 // indirect
-	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20191125211704-12ad95a8df72 // indirect
-	github.com/go-gl/mathgl v0.0.0-20190416160123-c4601bc793c7 // indirect
-	github.com/pkg/errors v0.8.1 // indirect
-)
+version https://git-lfs.github.com/spec/v1
+oid sha256:c878ce91a724ff6c0c5fb78b6f8a7c8b44b8d0ddb1367414ee8f326af3cf135a
+size 566

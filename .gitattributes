@@ -1,0 +1,4 @@
+*.mod filter=lfs diff=lfs merge=lfs -text
+*.sum filter=lfs diff=lfs merge=lfs -text
+*.go filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
