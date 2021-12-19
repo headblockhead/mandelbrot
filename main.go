@@ -9,6 +9,7 @@ import (
 	"os"
 	"sync"
 
+	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"golang.org/x/image/colornames"
 )
@@ -20,7 +21,7 @@ func main() {
 const width = 11200
 const height = 4800
 
-var maxIterations = 600
+var maxIterations = 60
 
 func run() {
 	cfg := pixelgl.WindowConfig{
@@ -37,8 +38,7 @@ func run() {
 	zoomMinY, zoomMaxY := 0.4488/8, -0.4488/8
 	i := 0.0
 	dec := 0.96
-		for !win.Closed() {
-	for true {
+	for !win.Closed() {
 		i++
 		var out *os.File
 		var err error
@@ -60,8 +60,8 @@ func run() {
 			os.Exit(1)
 		}
 		pic := pixel.PictureDataFromImage(image)
-				sprite := pixel.NewSprite(pic, pic.Bounds())
-				sprite.Draw(win, pixel.IM.Moved(win.Bounds().Center()))
+		sprite := pixel.NewSprite(pic, pic.Bounds())
+		sprite.Draw(win, pixel.IM.Moved(win.Bounds().Center()))
 		maxIterations += 6
 		if dec > 0.954 {
 			dec -= 0.000035
@@ -91,7 +91,7 @@ func run() {
 		if i == 295 {
 			fmt.Println("ffmpeg -r 15 -f image2 -s 3840x2160 -i image%03d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p test.mp4")
 		}
-				win.Update()
+		win.Update()
 	}
 }
 
