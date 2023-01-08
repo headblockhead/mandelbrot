@@ -18,8 +18,8 @@ func main() {
 	pixelgl.Run(run)
 }
 
-const width = 11200
-const height = 4800
+const width = 1400
+const height = 600
 
 var maxIterations = 60
 
